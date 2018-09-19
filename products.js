@@ -6,8 +6,8 @@ module.exports = [
     image: 'v1530025449/samples/bike.jpg',
     discountPrice: '$12',
     previousPrice: '$16',
-    badge: 'new',
-    category: ['women', 'new'],
+    badge: 'sale',
+    category: ['women', 'sale'],
   },
   {
     title: 'Best jogging shoes',
