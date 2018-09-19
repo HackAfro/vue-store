@@ -17,7 +17,7 @@ module.exports = [
     discountPrice: '$60',
     previousPrice: '',
     badge: 'new',
-    category: 'new',
+    category: ['new'],
   },
   {
     title: 'Old school leather bag',
@@ -27,7 +27,7 @@ module.exports = [
     discountPrice: '$240',
     previousPrice: '$320',
     badge: 'sale',
-    category: ['men', 'sale'],
+    category: ['men', 'sale', 'bag'],
   },
   {
     title: 'Blue winter jacket',
@@ -46,7 +46,7 @@ module.exports = [
     discountPrice: '$16',
     previousPrice: '',
     badge: '',
-    category: ['men'],
+    category: ['men', 'shirt'],
   },
   {
     title: 'The assorted collection',
@@ -56,7 +56,7 @@ module.exports = [
     discountPrice: '$300',
     previousPrice: '$415',
     badge: 'sale',
-    category: ['sale', 'men'],
+    category: ['sale', 'men', 'shirt'],
   },
   {
     title: 'Soft blue t-shirt',
@@ -66,7 +66,7 @@ module.exports = [
     discountPrice: '$5',
     previousPrice: '$16',
     badge: 'new',
-    category: ['new', 'men'],
+    category: ['new', 'men', 'shirt'],
   },
   {
     title: 'Beautiful self cleaning chef jacket',
@@ -96,7 +96,7 @@ module.exports = [
     discountPrice: '$120',
     previousPrice: '',
     badge: 'new',
-    category: ['new', 'men'],
+    category: ['new', 'men', 'shirt'],
   },
   {
     title: 'Non coating waist jacket',
@@ -116,7 +116,7 @@ module.exports = [
     discountPrice: '$53',
     previousPrice: '',
     badge: '',
-    category: ['men'],
+    category: ['men', 'shirt'],
   },
   {
     title: 'Cute sports top',
@@ -125,7 +125,7 @@ module.exports = [
     discountPrice: '$32',
     previousPrice: '',
     badge: '',
-    category: ['women'],
+    category: ['women', 'shirt'],
   },
   {
     title: 'The T-shirt',
@@ -135,7 +135,7 @@ module.exports = [
     discountPrice: '$86',
     previousPrice: '$110',
     badge: 'sale',
-    category: ['men', 'sale'],
+    category: ['men', 'sale', 'shirt'],
   },
   // {
   //   "title": "Non coating waist jacket",
