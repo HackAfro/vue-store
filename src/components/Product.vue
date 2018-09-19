@@ -1,28 +1,28 @@
 <template>
   <div class="product">
-    <a :href="product.context.custom.url || ''" target="_blank" class="product-card">
+    <div class="product-card">
       <div class="image-preview">
         <div class="preview">
-          <img id="productImg" class="img-responsive" :src="getImageUrl(product['public_id']) || ''"  :alt="product.context.custom.alt || ''"/>
+          <img id="productImg" class="img-responsive" :src="previewImg"  :alt="product.description || ''"/>
         </div>
         <div class="img-thumbnails">
-          <img :src="getProductThumbnail(product['public_id'], 1)" style="margin-right:4px"/>
-          <img :src="getProductThumbnail(product['public_id'], 2)" style="margin-right:4px"/>
-          <img :src="getProductThumbnail(product['public_id'], 3)"/>
+          <img :src="getProductThumbnail(product.image, 1)" @click="setImagePreview(1)" style="margin-right:4px"/>
+          <img :src="getProductThumbnail(product.image, 2)" @click="setImagePreview(2)" style="margin-right:4px"/>
+          <img :src="getProductThumbnail(product.image, 3)" @click="setImagePreview(3)"/>
         </div>
       </div>
       <div class="details">
         <!-- <h4 v-html="product.context.custom.offer"></h4> -->
         <div class="extras">
           <div class="product-info">
-            <h5 class="product-name">Swish round neck cover</h5>
-            <p class="description">It is great on your neck and features a great color range</p>
-            <p class="discount">up to 20% off</p>
+            <h5 class="product-name">{{product.title}}</h5>
+            <p class="description">{{product.description}}</p>
+            <p class="discount" v-if="product.previousPrice">up to {{getPercentageDiscount(product)}}% off</p>
           </div>
           <div class="deals">
             <div class="price-offer">
-              <p class="prev">$29</p>
-              <p class="current">$18</p>
+              <p class="prev" v-if="product.previousPrice">{{product.previousPrice}}</p>
+              <p class="current">{{product.discountPrice}}</p>
             </div>
           </div>
         </div>
@@ -33,29 +33,59 @@
           <div class="color orange"></div>
         </div> -->
       </div>
-    </a>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    product: {}
+    product: {},
+  },
+  data(){
+    return {
+      previewImg: ''
+    }
   },
   methods: {
     getImageUrl(imageId){
-      return `https://res.cloudinary.com/chriszak/image/upload/q_auto,f_auto,fl_lossy,w_370,h_370,c_fill,g_auto/if_!new!_in_tags/l_badge_newpink,w_100,g_north_west,y_5,x_5/if_end/if_!sale!_in_tags/l_badge_sale,w_200,g_north_west/if_end/${imageId}.jpg`
+      // return `https://res.cloudinary.com/chriszak/image/upload/q_auto,f_auto,fl_lossy,w_370,h_370,c_fill,g_auto/if_!new!_in_tags/l_badge_newpink,w_100,g_north_west,y_5,x_5/if_end/if_!sale!_in_tags/l_badge_sale,w_200,g_north_west/if_end/${imageId}.jpg`
+      return `https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/${imageId}`;
     },
 
     getProductThumbnail(imageId, imagePosition){
-      const ImagePrefix = {
-        '1': 'https://res.cloudinary.com/chriszak/image/upload/q_auto,f_auto,fl_lossy,w_80,h_80,c_fill/',
-        '2': 'https://res.cloudinary.com/chriszak/image/upload/q_auto,f_auto,fl_lossy,w_80,h_80,c_fill,r_max/',
-        '3': 'https://res.cloudinary.com/chriszak/image/upload/q_auto,f_auto,fl_lossy,w_80,h_80,c_thumb,g_auto,e_art:incognito/'
+      const imageTransformations = {
+        '1': 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,w_80,h_80,c_fill/',
+        '2': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_cartoonify,q_auto,f_auto,fl_lossy,w_80,h_80,c_fill/',
+        '3': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_hue:80,q_auto,f_auto,fl_lossy,w_80,h_80,c_fill,g_auto/'
       };
 
-      return `${ImagePrefix[imagePosition]}${imageId}.jpg`;
+      return `${imageTransformations[imagePosition]}${imageId}`;
+    },
+
+    getPercentageDiscount({previousPrice, discountPrice}){
+      const difference = previousPrice.slice(1) - discountPrice.slice(1);
+      const percentage = difference/previousPrice.slice(1) * 100;
+      return Math.round(percentage);
+    },
+
+    setImagePreview(position){
+      const imageTransformations = {
+        '1': 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_fill/',
+        '2': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_cartoonify,q_auto,f_auto,fl_lossy,c_fill/',
+        '3': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_hue:80,q_auto,f_auto,fl_lossy,c_fill,g_auto/'
+      };
+
+      const preview = `${imageTransformations[position]}${this.product.image}`;
+
+      this.previewImg = preview;
+    },
+    setproductImage(){
+      this.previewImg = this.getImageUrl(this.product.image);
     }
+  },
+  created(){
+    this.setproductImage();
   }
 }
 </script>
@@ -67,7 +97,7 @@ export default {
   background: white;
   border-radius: 5px;
   padding: 0;
-  margin: 0 20px 20px 0;
+  margin: 0 20px 30px 0;
   transition: 0.2s ease-in-out;
 }
 
@@ -77,22 +107,22 @@ export default {
   transform: scale(1.03);
 }
 
-.img-thumbnails{
+.img-thumbnails {
   display: flex;
   margin-top: 6px;
 }
 
-.img-thumbnails > img{
+.img-thumbnails > img {
   height: 0px;
   width: 30px;
   object-fit: cover;
   border-radius: 4px;
   margin: 0 3px;
   transition: 0.4s ease-in-out;
-
+  cursor: pointer;
 }
 
-.product:hover .img-thumbnails > img{
+.product:hover .img-thumbnails > img {
   height: 30px;
 }
 
