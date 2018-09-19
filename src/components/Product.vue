@@ -48,9 +48,14 @@ export default {
     }
   },
   methods: {
-    getImageUrl(imageId){
-      // return `https://res.cloudinary.com/chriszak/image/upload/q_auto,f_auto,fl_lossy,w_370,h_370,c_fill,g_auto/if_!new!_in_tags/l_badge_newpink,w_100,g_north_west,y_5,x_5/if_end/if_!sale!_in_tags/l_badge_sale,w_200,g_north_west/if_end/${imageId}.jpg`
-      return `https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/${imageId}`;
+    getImageUrl({badge, image}){
+      const imageWithNewBadge = 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/l_new_1,w_60,g_north_west/';
+      const imageWithSaleBadge = 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/l_sale,w_60,g_north_west/';
+      const defaultUrl = 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/';
+
+      const imageUrl = !!badge ? badge ==='new' ? `${imageWithNewBadge}${image}` : `${imageWithSaleBadge}${image}` : `${defaultUrl}${image}`
+      
+      return imageUrl;
     },
 
     getProductThumbnail(imageId, imagePosition){
@@ -81,7 +86,7 @@ export default {
       this.previewImg = preview;
     },
     setproductImage(){
-      this.previewImg = this.getImageUrl(this.product.image);
+      this.previewImg = this.getImageUrl(this.product);
     }
   },
   created(){
