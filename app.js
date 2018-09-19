@@ -1,8 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const app = express();
+const products = require('./products');
+
 const port = process.env.PORT || 4000;
 
 app.use(bodyParser.json());
@@ -16,26 +17,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/products', (req, res) => {
-  const { body } = req;
-  const { text, id } = body;
-  const result = sentiment.analyze(text);
-  const comparative = result.comparative;
-  const tone =
-    comparative >= 0 ? (comparative >= 1 ? 'positive' : 'neutral') : 'negative';
-
-  const data = {
-    text,
-    id,
-    timeStamp: new Date(),
-    sentiment: {
-      tone,
-      score: result.score,
-    },
-  };
-
-  pusher.trigger('chat', 'message', data);
-  res.json(data);
+app.get('/products', (req, res) => {
+  res.status(200).json(products);
 });
 
 app.listen(port, () => {
