@@ -36,19 +36,19 @@ export default {
     }
   },
   methods: {
-    async updateProductList(data){
-      this.filter = data;
+    async updateProductList(query){
+      this.filter = query;
       const resourceUrl = this.getResourceUrl(this.filter);
       const res = await fetch(resourceUrl);
       const resJson = await res.json();
-      this.products = resJson.resources;
+      this.products = resJson;
     },
-    getResourceUrl(query){
-      return `https://res.cloudinary.com/chriszak/image/list/${query}.json`;
+    getResourceUrl(filter = ''){
+      return `http://localhost:4000/products/${filter}`;
     }
   },
   created(){
-    this.updateProductList('products');
+    this.updateProductList();
   }
 
 }
