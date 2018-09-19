@@ -126,6 +126,7 @@ footer div.container {
   font-size: 45px;
   font-weight: 700;
   color: white;
+  font-family: 'Pacifico', cursive;
 }
 
 .heading p{
