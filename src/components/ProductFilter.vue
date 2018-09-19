@@ -2,13 +2,13 @@
   <div class="filters">
     <h4 class="filter-header">Categories</h4>
     <ul class="categories-list">
-      <li>All products</li>
-      <li>New</li>
-      <li>On Sale</li>
-      <li>Mens</li>
-      <li>Womens</li>
-      <li>Shirts</li>
-      <li>Bags</li>
+      <li @click="update('')">All products</li>
+      <li @click="update('new')">New</li>
+      <li @click="update('sale')">On Sale</li>
+      <li @click="update('men')">Mens</li>
+      <li @click="update('women')">Womens</li>
+      <li @click="update('shirt')">Shirts</li>
+      <li @click="update('bag')">Bags</li>
     </ul>
   </div>
 </template>
@@ -22,8 +22,8 @@ export default {
     }
   },
   methods: {
-    update(){
-      this.$emit('filterChange', this.filter);
+    update(filter){
+      this.$emit('filterChange', filter);
     }
   }
 }
