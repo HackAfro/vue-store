@@ -23,7 +23,6 @@ app.get('/products', (req, res) => {
 
 app.get('/products/:filter', (req, res) => {
   const { filter } = req.params;
-  console.log(filter);
   const productCategory = products.filter((product) =>
     product.category.includes(filter)
   );
