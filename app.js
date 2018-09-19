@@ -21,6 +21,15 @@ app.get('/products', (req, res) => {
   res.status(200).json(products);
 });
 
+app.get('/products/:filter', (req, res) => {
+  const { filter } = req.params;
+  console.log(filter);
+  const productCategory = products.filter((product) =>
+    product.category.includes(filter)
+  );
+  res.status(200).json(productCategory);
+});
+
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
