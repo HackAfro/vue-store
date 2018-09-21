@@ -3,16 +3,15 @@
     <div class="product-card">
       <div class="image-preview">
         <div class="preview">
-          <img id="productImg" class="img-responsive" :src="previewImg"  :alt="product.description || ''"/>
+          <a :href="product.url" target="_blank">
+            <img id="productImg" class="img-responsive" :src="previewImg"  :alt="product.description || ''"/>
+          </a>
         </div>
         <div class="img-thumbnails">
-          <img :src="getProductThumbnail(product.image, 1)" @click="setImagePreview(1)" style="margin-right:4px"/>
-          <img :src="getProductThumbnail(product.image, 2)" @click="setImagePreview(2)" style="margin-right:4px"/>
-          <img :src="getProductThumbnail(product.image, 3)" @click="setImagePreview(3)"/>
+          <img v-for="thumb of product.thumbnails" :key="thumb" :src="getProductThumbnail(thumb)" @click="setImagePreview(thumb)" style="margin-right:4px" />
         </div>
       </div>
       <div class="details">
-        <!-- <h4 v-html="product.context.custom.offer"></h4> -->
         <div class="extras">
           <div class="product-info">
             <h5 class="product-name">{{product.title}}</h5>
@@ -26,12 +25,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="colors">
-          <div class="color red selected"></div>
-          <div class="color green"></div>
-          <div class="color blue"></div>
-          <div class="color orange"></div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -48,24 +41,18 @@ export default {
     }
   },
   methods: {
-    getImageUrl({badge, image}){
-      const imageWithNewBadge = 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/l_new_1,w_60,g_north_west/';
-      const imageWithSaleBadge = 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/l_sale,w_60,g_north_west/';
+    getImageUrl({badge = '', image}){
+      const imageWithNewBadge = 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,h_370/l_new_1,w_60,g_north_west,y_60/';
+      const imageWithSaleBadge = 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/l_sale,w_60,g_west/';
       const defaultUrl = 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_scale,w_370/';
 
-      const imageUrl = !!badge ? badge ==='new' ? `${imageWithNewBadge}${image}` : `${imageWithSaleBadge}${image}` : `${defaultUrl}${image}`
+      const imageUrl = badge ? badge ==='new' ? `${imageWithNewBadge}${image}` : `${imageWithSaleBadge}${image}` : `${defaultUrl}${image}`
       
       return imageUrl;
     },
 
-    getProductThumbnail(imageId, imagePosition){
-      const imageTransformations = {
-        '1': 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,w_80,h_80,c_fill/',
-        '2': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_cartoonify,q_auto,f_auto,fl_lossy,w_80,h_80,c_fill/',
-        '3': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_hue:80,q_auto,f_auto,fl_lossy,w_80,h_80,c_fill,g_auto/'
-      };
-
-      return `${imageTransformations[imagePosition]}${imageId}`;
+    getProductThumbnail(imageId){
+      return `https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,w_80,h_80,c_fill/${imageId}`;
     },
 
     getPercentageDiscount({previousPrice, discountPrice}){
@@ -74,16 +61,16 @@ export default {
       return Math.round(percentage);
     },
 
-    setImagePreview(position){
-      const imageTransformations = {
-        '1': 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_fill/',
-        '2': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_cartoonify,q_auto,f_auto,fl_lossy,c_fill/',
-        '3': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_hue:80,q_auto,f_auto,fl_lossy,c_fill,g_auto/'
-      };
+    setImagePreview(imageId){
+      // const imageTransformations = {
+      //   '1': 'https://res.cloudinary.com/sealuse-creatives/image/upload/q_auto,f_auto,fl_lossy,c_fill/',
+      //   '2': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_cartoonify,q_auto,f_auto,fl_lossy,c_fill/',
+      //   '3': 'https://res.cloudinary.com/sealuse-creatives/image/upload/e_hue:80,q_auto,f_auto,fl_lossy,c_fill,g_auto/'
+      // };
 
-      const preview = `${imageTransformations[position]}${this.product.image}`;
+      // const preview = `${imageTransformations[position]}${this.product.image}`;
 
-      this.previewImg = preview;
+      this.previewImg = this.getImageUrl({image: imageId});
     },
     setproductImage(){
       this.previewImg = this.getImageUrl(this.product);
