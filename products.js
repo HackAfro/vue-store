@@ -29,7 +29,7 @@ module.exports = [
     discountPrice: '$60',
     previousPrice: '',
     badge: 'new',
-    category: ['new'],
+    category: ['new', 'men'],
   },
   {
     title: 'Beautiful lightweight tank',
@@ -45,7 +45,7 @@ module.exports = [
     discountPrice: '$240',
     previousPrice: '$320',
     badge: 'sale',
-    category: ['men', 'sale', 'bag'],
+    category: ['women', 'sale', 'bag'],
   },
   {
     title: 'Blue skinny jean',
@@ -76,7 +76,7 @@ module.exports = [
     discountPrice: '$16',
     previousPrice: '',
     badge: '',
-    category: ['men', 'shirt'],
+    category: ['women', 'shirt'],
   },
   {
     title: 'Swiftly Tech Short Sleeve Crew',
@@ -92,7 +92,7 @@ module.exports = [
     discountPrice: '$300',
     previousPrice: '$415',
     badge: 'sale',
-    category: ['sale', 'men', 'shirt'],
+    category: ['sale', 'women', 'shirt'],
   },
   
   {
@@ -108,7 +108,7 @@ module.exports = [
     discountPrice: '$46',
     previousPrice: '',
     badge: '',
-    category: ['men'],
+    category: ['women'],
   },
   {
     title: 'Comfy jogging shoes',
@@ -140,7 +140,7 @@ module.exports = [
     discountPrice: '$120',
     previousPrice: '$156',
     badge: 'sale',
-    category: ['sale', 'men'],
+    category: ['sale', 'women'],
   },
   {
     title: 'Sojourn Hoodie 20th Anniversary',
@@ -173,7 +173,7 @@ module.exports = [
     discountPrice: '$53',
     previousPrice: '',
     badge: '',
-    category: ['men', 'shirt'],
+    category: ['women', 'shirt'],
   },
   {
     title: 'Dry Sense Hoodie',
